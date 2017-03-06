@@ -3,6 +3,9 @@
 <link rel="import" href="bower_components/app-storage/app-indexeddb-mirror/app-indexeddb-mirror.html">
 <link rel="import" href="bower_components/polymerfire/polymerfire.html">
 
+<link rel="import" href="bower_components/vaadin-grid/vaadin-grid.html">
+
+
 <dom-module id="note-app">
   <template>
     <style include="note-app-shared-styles"></style>
@@ -71,6 +74,37 @@
       </template>
     </div>
 
+    <vaadin-grid items="[[notes]]">
+        <template class="row-details">
+          <div style="padding: 10px; border: solid 1px #9c27b0;">
+            <h3>[[item.title]]</h3>
+            <p>[[item.body]]</p>
+          </div>
+        </template>
+
+        <vaadin-grid-column>
+          <template class="header">#</template>
+          <template>[[index]] / [[persistedNotes.length]]</template>
+        </vaadin-grid-column>
+
+        <vaadin-grid-column>
+          <template class="header">Title</template>
+          <template>[[item.title]]</template>
+        </vaadin-grid-column>
+
+        <vaadin-grid-column>
+          <template class="header">Body</template>
+          <template>[[item.body]]</template>
+        </vaadin-grid-column>
+
+        <vaadin-grid-column width="100px">
+          <template class="header"></template>
+          <template>
+            <label><input type="checkbox" checked="{{expanded::change}}">Show Details</label>
+          </template>
+        </vaadin-grid-column>
+      </vaadin-grid>
+
   </template>
   <script>
     Polymer({
@@ -92,7 +126,7 @@
       get isEditable() {
         return this.online;
       }
-      
+
     });
   </script>
 </dom-module>
